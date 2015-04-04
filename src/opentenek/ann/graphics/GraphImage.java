@@ -46,12 +46,11 @@ public class GraphImage
         int width = image.getWidth();
         int height = image.getHeight();
         
-        System.out.println("range: " + range());
-        
         g.setColor(Color.white);
         g.fillRect(0, 0, width, height);
         
         double range = range();
+        @SuppressWarnings("unused")
         double highest = highestValue();
         double lowest = lowestValue();
         double dWidth = range <= 0 ? 0 : (double)width / values.size();

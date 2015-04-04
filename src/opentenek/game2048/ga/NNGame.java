@@ -1,6 +1,7 @@
 package opentenek.game2048.ga;
 
 import opentenek.ann.graphics.GraphDisplay;
+import opentenek.ann.graphics.SimpleNNDisplay;
 import opentenek.ann.net.NeuralNetwork;
 import opentenek.game2048.Board;
 import opentenek.game2048.Display;
@@ -16,6 +17,7 @@ public class NNGame extends GameLoop
     public GA2048 ga;
     
     public GraphDisplay graph;
+    public SimpleNNDisplay nndisp;
     
     private int ticks = 0;
     
@@ -24,21 +26,28 @@ public class NNGame extends GameLoop
         super(60, 5000);
         
         graph = new GraphDisplay(640, 480);
+        nndisp = new SimpleNNDisplay(null, 640, 480);
         
         init();
     }
 
     private void init() 
     {
-        board = new Board(4, 4);
+        board = new Board(10, 10);
         board.spawnRandomTile();
         board.spawnRandomTile();
-        display = new Display("2048: Neural Network", 400, 500);
+        display = new Display("2048: Neural Network", 1000, 1100);
         
         pop = new AIPopulation(
                 100,
-                3,
-                new int[]{board.getWidth()*board.getHeight(), board.getWidth()*board.getHeight(), board.getWidth()*board.getHeight(), 4}
+                5,
+                new int[]{
+                        board.getWidth()*board.getHeight(), 
+                        board.getWidth()*board.getHeight(), 
+                        board.getWidth()*board.getHeight(), 
+                        board.getWidth()*board.getHeight(), 
+                        board.getWidth()*board.getHeight(), 
+                        4}
             );
         
         ga = new GA2048(pop);
@@ -63,8 +72,10 @@ public class NNGame extends GameLoop
         }
         
         
-        if(ticks >= (curIndex == 0 ? 00 : 0)) 
+        if(ticks >= (curIndex == 0 ? 400 : 0)) 
         {
+            nndisp.setNN(ai);
+            
             ticks = 0;
             board.update(); 
             int width = board.getWidth();
@@ -82,9 +93,9 @@ public class NNGame extends GameLoop
             boolean moved = false;
             boolean allowed[] = new boolean[]{true, true, true, true};
             double out[] = ai.fire(input);
+            nndisp.draw(input); 
             
-            
-            while(!moved && board.canMove()) 
+//            while(!moved && board.canMove()) 
             {
                 double max = -1;
                 int index = -1;
@@ -117,10 +128,10 @@ public class NNGame extends GameLoop
                     break;
                 }
                 
-                boolean m = false;
-                for(boolean b : allowed) 
-                    if(b) m = true;
-                if(!m) break;
+//                boolean m = false;
+//                for(boolean b : allowed) 
+//                    if(b) m = true;
+//                if(!m) break;
             }
             
             
@@ -131,7 +142,7 @@ public class NNGame extends GameLoop
                 int high = board.highestValue();
                 if(high > bestVal) bestVal = high;
                 
-                pop.get(curIndex).setScore(board.getScore());
+                pop.get(curIndex).setScore(board.highestValue());
                 
                 reset();
                 

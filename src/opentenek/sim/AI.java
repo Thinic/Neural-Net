@@ -14,8 +14,8 @@ public class AI implements Controller
     
     public AI(NeuralNetwork nn) 
     {
-        if(nn.getNumInputs() == SensorData.NUM_SENSORS &&
-           nn.getNumOutputs() == 3)
+        if(nn.numInputs() == SensorData.NUM_SENSORS &&
+           nn.numOutputs() == 3)
             this.nn = nn;
     }
     

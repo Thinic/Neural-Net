@@ -68,7 +68,7 @@ public class GA2048
             if(Math.random() < 0.02) 
             {
                 double w = data.getData().getWeight(i);
-                w += Math.random() * 10;
+                w += Math.random() * 10 - 5;
                 data.getData().setWeight(i, w);
             }
         }

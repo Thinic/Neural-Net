@@ -10,7 +10,7 @@ public class AIData
     public AIData(int layers, int neurons[]) 
     {
         data = new NeuralNetworkData(layers, neurons);
-        data.randomize(-10, 10);
+//        data.randomize(-10, 10);
     }
     
     public void setScore(int s) 
