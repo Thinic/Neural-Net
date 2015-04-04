@@ -1,5 +1,6 @@
 package opentenek.game2048.ga;
 
+import opentenek.ann.graphics.GraphDisplay;
 import opentenek.ann.net.NeuralNetwork;
 import opentenek.game2048.Board;
 import opentenek.game2048.Display;
@@ -22,6 +23,8 @@ public class NNGame extends GameLoop
     {
         super(60, 5000);
         
+        graph = new GraphDisplay(640, 480);
+        
         init();
     }
 
@@ -34,8 +37,8 @@ public class NNGame extends GameLoop
         
         pop = new AIPopulation(
                 100,
-                2,
-                new int[]{board.getWidth()*board.getHeight(), board.getWidth()*board.getHeight(), 4}
+                3,
+                new int[]{board.getWidth()*board.getHeight(), board.getWidth()*board.getHeight(), board.getWidth()*board.getHeight(), 4}
             );
         
         ga = new GA2048(pop);
@@ -60,7 +63,7 @@ public class NNGame extends GameLoop
         }
         
         
-        if(ticks >= (curIndex == 0 ? 0 : 0)) 
+        if(ticks >= (curIndex == 0 ? 00 : 0)) 
         {
             ticks = 0;
             board.update(); 
@@ -140,6 +143,8 @@ public class NNGame extends GameLoop
                     System.out.println("Generation: " + ga.getGeneration());
                     System.out.println("Highest Value: " + bestVal);
                     pop.print();
+                    
+                    graph.addValue(pop.getFittest().getScore());
                     
                     curIndex = 0;
                     ga.evolve();
