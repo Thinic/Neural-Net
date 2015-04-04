@@ -14,6 +14,8 @@ public class NNGame extends GameLoop
     public AIPopulation pop;
     public GA2048 ga;
     
+    public GraphDisplay graph;
+    
     private int ticks = 0;
     
     public NNGame()
@@ -58,7 +60,7 @@ public class NNGame extends GameLoop
         }
         
         
-        if(ticks >= (curIndex == 0 ? 400 : 0)) 
+        if(ticks >= (curIndex == 0 ? 0 : 0)) 
         {
             ticks = 0;
             board.update(); 
